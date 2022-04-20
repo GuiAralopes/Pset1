@@ -79,13 +79,6 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE elmasri.funcionario ADD CONSTRAINT funcionario_funcionario_fk
-FOREIGN KEY (cpf_supervisor)
-REFERENCES elmasri.funcionario (cpf)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
 ALTER TABLE elmasri.trabalha_em ADD CONSTRAINT funcionario_trabalha_em_fk
 FOREIGN KEY (cpf_funcionario)
 REFERENCES elmasri.funcionario (cpf)
