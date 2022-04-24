@@ -8,6 +8,8 @@ COMMIT;
 
 -- Criação do Banco de dados
 
+--criação do banco de dados e decidir seu proprietário
+--formatar para a codificação UTF-8
 CREATE DATABASE uvv
     WITH 
     OWNER = guiaraujo
