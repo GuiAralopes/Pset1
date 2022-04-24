@@ -154,6 +154,8 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+
+--FORMAT0 DATE: YYYY/MM/DD
 --inserção dos dados na tabela funcionário
 INSERT INTO elmasri.funcionario(
     cpf, primeiro_nome, nome_meio, ultimo_nome, data_nascimento, endereco, sexo, salario, cpf_supervisor, numero_departamento)
