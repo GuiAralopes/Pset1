@@ -34,14 +34,14 @@ CREATE TABLE elmasri.funcionario (
                 ultimo_nome VARCHAR(15) NOT NULL,
                 data_nascimento DATE,
                 endereco VARCHAR(60),
-                sexo CHAR(1) CHECK(sexo= 'M' OR sexo= 'F'),
+                sexo CHAR(1) CHECK(sexo= 'M' OR sexo= 'F'),--CHAR sexo só pode ser digitado os caracteres 'm' ou 'f'
                 salario NUMERIC(10,2) CHECK(salario>0),
                 cpf_supervisor CHAR(11) CHECK(cpf_supervisor != cpf),-- verificação da chave primária em relação ao cpf do supervisor
                 numero_departamento INTEGER NOT NULL,
                 CONSTRAINT funcionario_pk PRIMARY KEY (cpf) --criação da primary key da tabela
 );
 
---crição da tabela dependente
+--criação da tabela dependente
 CREATE TABLE elmasri.dependente (
                 cpf_funcionario CHAR(11) NOT NULL,
                 nome_dependente VARCHAR(15) NOT NULL,
