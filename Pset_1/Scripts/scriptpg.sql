@@ -1,14 +1,13 @@
-BEGIN;
--- Criação do user para admistração do banco de dados.
-CREATE USER guiaraujo WITH PASSWORD '12345' CREATEDB;
 
-ALTER USER guiaraujo PASSWORD null;
-COMMIT;
-
--- Criação do Banco de dados
+-- Criação da role para admistração do banco de dados.
+CREATE ROLE guiaraujo WITH
+	CREATEDB
+	INHERIT
+	LOGIN
+	PASSWORD '1234';
 
 --criação do banco de dados e decidir seu proprietário
---formatar para a codificação UTF-8
+--codificação UTF-8
 CREATE DATABASE uvv
     WITH 
     OWNER = guiaraujo
