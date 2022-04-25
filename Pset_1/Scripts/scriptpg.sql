@@ -33,7 +33,7 @@ CREATE TABLE elmasri.funcionario (
                 nome_meio CHAR(1),
                 ultimo_nome VARCHAR(15) NOT NULL,
                 data_nascimento DATE,
-                endereco VARCHAR(60),
+                endereco VARCHAR(50),
                 sexo CHAR(1) CHECK(sexo= 'M' OR sexo= 'F'),--CHAR sexo só pode ser digitado os caracteres 'm' ou 'f'
                 salario NUMERIC(10,2) CHECK(salario>0),
                 cpf_supervisor CHAR(11) CHECK(cpf_supervisor != cpf),-- verificação da chave primária em relação ao cpf do supervisor
