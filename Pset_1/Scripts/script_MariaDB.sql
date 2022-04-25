@@ -101,7 +101,7 @@ REFERENCES departamento (numero_departamento)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE projeto ADD CONSTRAINT departamento_projeto_fk1
+ALTER TABLE projeto ADD CONSTRAINT departamento_projeto_fk
 FOREIGN KEY (numero_departamento)
 REFERENCES departamento (numero_departamento)
 ON DELETE NO ACTION
