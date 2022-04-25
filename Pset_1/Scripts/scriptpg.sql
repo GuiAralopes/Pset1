@@ -4,7 +4,7 @@ CREATE ROLE guiaraujo WITH
 	CREATEDB
 	INHERIT
 	LOGIN
-	PASSWORD '1234';
+	PASSWORD 'pgdb123';
 
 --criação do banco de dados e decidir seu proprietário
 --codificação UTF-8
