@@ -1,3 +1,5 @@
+use uvv;
+
 
 CREATE TABLE funcionario (
                 cpf CHAR(11) NOT NULL,
