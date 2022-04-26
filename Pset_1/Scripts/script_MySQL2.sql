@@ -1,6 +1,7 @@
+--Seleção do banco de dados
 use uvv;
 
-
+--criação da tabela funcionario
 CREATE TABLE funcionario (
                 cpf CHAR(11) NOT NULL,
                 primeiro_nome VARCHAR(15) NOT NULL,
@@ -21,7 +22,7 @@ ALTER TABLE funcionario MODIFY COLUMN primeiro_nome VARCHAR(15) COMMENT 'Primeir
 
 ALTER TABLE funcionario MODIFY COLUMN nome_meio CHAR(1) COMMENT 'Primeiro sobrenome do funcionário';
 
-
+--criação da tabela departamento
 CREATE TABLE departamento (
                 numero_departamento INT NOT NULL,
                 nome_departamento VARCHAR(15) NOT NULL,
@@ -30,11 +31,12 @@ CREATE TABLE departamento (
                 PRIMARY KEY (numero_departamento)
 );
 
-
+-- criação da alternate key da tabela departamento
 CREATE UNIQUE INDEX departamento_ak
  ON departamento
  ( nome_departamento );
 
+--criação da tabela para armazenar os projetos
 CREATE TABLE projeto (
                 numero_projeto INT NOT NULL,
                 local_projeto VARCHAR(15),
@@ -43,11 +45,12 @@ CREATE TABLE projeto (
                 PRIMARY KEY (numero_projeto)
 );
 
-
+--criação da alternate key da tabela projeto
 CREATE UNIQUE INDEX projeto_ak
  ON projeto
  ( nome_projeto );
 
+--criação da tabela de local de trabalho
 CREATE TABLE trabalha_em (
                 cpf_funcionario CHAR(11) NOT NULL,
                 numero_projeto INT NOT NULL,
@@ -56,13 +59,14 @@ CREATE TABLE trabalha_em (
 );
 
 
+--criação da tabela para armazenar a localização dos departamentos
 CREATE TABLE localizacoes_departamento (
                 numero_departamento INT NOT NULL,
                 local VARCHAR(15) NOT NULL,
                 PRIMARY KEY (numero_departamento, local)
 );
 
-
+--criação da tabela dependente
 CREATE TABLE dependente (
                 cpf_funcionario CHAR(11) NOT NULL,
                 nome_dependente VARCHAR(11) NOT NULL,
@@ -72,43 +76,49 @@ CREATE TABLE dependente (
                 PRIMARY KEY (cpf_funcionario, nome_dependente)
 );
 
-
+--criação da foreign key cpf_funcionario na tabela dependente
 ALTER TABLE dependente ADD CONSTRAINT funcionario_dependente_fk
 FOREIGN KEY (cpf_funcionario)
 REFERENCES funcionario (cpf)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
+--criação da foreign key cpf_gerente na tabela departamento
 ALTER TABLE departamento ADD CONSTRAINT funcionario_departamento_fk
 FOREIGN KEY (cpf_gerente)
 REFERENCES funcionario (cpf)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
+--criação da foreign key cpf_supervisor na tabela funcionário
 ALTER TABLE funcionario ADD CONSTRAINT funcionario_funcionario_fk
 FOREIGN KEY (cpf_supervisor)
 REFERENCES funcionario (cpf)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
+--criação da foreign key cpf_funcionario na tabela trabalha_em
 ALTER TABLE trabalha_em ADD CONSTRAINT funcionario_trabalha_em_fk
 FOREIGN KEY (cpf_funcionario)
 REFERENCES funcionario (cpf)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
+--criação da foreign key numero_departamento na tabela localizacoes_departamento
 ALTER TABLE localizacoes_departamento ADD CONSTRAINT departamento_localizacoes_departamento_fk
 FOREIGN KEY (numero_departamento)
 REFERENCES departamento (numero_departamento)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
+--criação da foreign key numero_departamento na tabela projeto
 ALTER TABLE projeto ADD CONSTRAINT departamento_projeto_fk
 FOREIGN KEY (numero_departamento)
 REFERENCES departamento (numero_departamento)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
+--criação da foreign key numero_projeto na tabela trabalha_em
 ALTER TABLE trabalha_em ADD CONSTRAINT projeto_trabalha_em_fk
 FOREIGN KEY (numero_projeto)
 REFERENCES projeto (numero_projeto)
