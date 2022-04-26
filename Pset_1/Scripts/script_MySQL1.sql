@@ -1,6 +1,6 @@
 CREATE USER 'guiaraujo'@'localhost' IDENTIFIED BY 'pgdb123';
 
--- Criar o banco de dados e o esquema no MariaDB
+-- Criar o banco de dados no MariaDB
 CREATE database uvv
 --codificação UTF-8
 	CHARACTER SET utf8mb4
