@@ -24,7 +24,7 @@ SELECT
 	DATE_PART('year', current_date)- DATE_PART('year', f.data_nascimento) as idade, --idade do funcionário através da data atual menos a data_nascimento
 	f.salario,
 	d.nome_departamento 
-FROM funcionario f 
+FROM 	funcionario f 
 
 JOIN departamento d on f.numero_departamento  = d.numero_departamento 
 ORDER BY nome_departamento 	--ordenado por nome_departamento 
@@ -42,7 +42,7 @@ SELECT
 	(case when(f.salario < '35000') then f.salario * 1.20
 			when (f.salario >= '35000')then f.salario * 1.15 end) as salario_reajuste	/*usamos o case para uma condição de reajuste dependendo do salário
 																					      do funcionário */				
-FROM funcionario f 						--os dados selecionados vêm de funcionario 
+FROM 	funcionario f 						--os dados selecionados vêm de funcionario 
 	
 /*QUESTÃO 05: prepare um relatório que liste, para cada departamento, o nome
 do gerente e o nome dos funcionários. Ordene esse relatório por nome do departamento 
@@ -53,7 +53,7 @@ CAST (case when D.cpf_gerente = f.cpf THEN
 	(f.primeiro_nome||' '|| f.nome_meio||' '|| f.ultimo_nome) END AS varchar(31)) as nome_gerente, 
 	(f.primeiro_nome||' '|| f.nome_meio||' '|| f.ultimo_nome) AS nome_funcionario, 
 	f.salario
-FROM funcionario f	
+FROM 	funcionario f	
 	
 INNER JOIN departamento d
 ON F.numero_departamento = D.numero_departamento
@@ -76,8 +76,7 @@ TEM dependente, seu nome completo, departamento e salário.*/
 SELECT (F.primeiro_nome||' '|| F.nome_meio||' '|| F.ultimo_nome) AS nome_funcionario,
 F.numero_departamento,
 F.salario
-	FROM 
-		funcionario AS F
+FROM 	funcionario AS F
 	WHERE F.cpf NOT IN (SELECT D.cpf_funcionario FROM dependente AS D);
 
 /*QUESTÃO 08: prepare um relatório que mostre, para cada departamento, os projetos desse departamento e o nome completo dos funcionários que estão alocados
@@ -87,7 +86,7 @@ em cada projeto. Além disso inclua o número de horas trabalhadas por cada func
 SELECT D.nome_departamento, P.nome_projeto, (F.primeiro_nome||' '|| F.nome_meio||' '|| F.ultimo_nome) AS nome_funcionario,
 CAST (CASE WHEN T.horas is null then 0 else T.horas end as DECIMAL(3, 1)) as horas
 
-	FROM funcionario AS F
+FROM funcionario AS F
 		
 	INNER JOIN trabalha_em AS T
 	ON F.cpf = T.cpf_funcionario
@@ -103,7 +102,7 @@ projeto em cada departamento. Obs.: o relatório deve exibir o nome do departame
 SELECT D.nome_departamento, P.nome_projeto,
 CAST (CASE WHEN SUM(T.horas) is null then 0 else SUM(T.horas) end as DECIMAL(3, 1)) AS total_horas
 
-	FROM funcionario AS F
+FROM 	funcionario AS F
 		
 	INNER JOIN trabalha_em AS T
 	ON F.cpf = T.cpf_funcionario
@@ -118,8 +117,7 @@ de cada departamento.*/
 
 SELECT D.nome_departamento,
 CAST (AVG(salario) AS DECIMAL(10,2)) AS media_salarial
-	FROM 
-		funcionario AS F
+FROM 	funcionario AS F
 	INNER JOIN departamento AS D
 	ON F.numero_departamento = D.numero_departamento
 	GROUP BY D.nome_departamento;
