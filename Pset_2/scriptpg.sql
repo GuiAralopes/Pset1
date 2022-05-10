@@ -1,7 +1,7 @@
 -- QUESTÃO 01: prepare um relatório que mostre a média salarial dos funcionários de cada departamento.
 SELECT  numero_departamento, 
-       AVG(salario) AS media_salarial	-- usa a função average para calcular a media
-FROM funcionario 					 	-- seleciona a tabela funcionario 
+       AVG(salario) AS media_salarial		-- usa a função average para calcular a media
+FROM funcionario 				-- seleciona a tabela funcionario 
 GROUP BY numero_departamento
 ORDER BY numero_departamento ;			-- agrupado e ordenado pelo número de departamento 
 
@@ -10,9 +10,9 @@ ORDER BY numero_departamento ;			-- agrupado e ordenado pelo número de departam
 SELECT sexo, 
        AVG(salario) AS media_genero		--usa a função average para calcular a média
        
-FROM funcionario						-- seleciona a tabela funcionario  			
+FROM funcionario				-- seleciona a tabela funcionario  			
 GROUP BY sexo
-ORDER BY sexo ;							--agrupado e ordenado  por sexo
+ORDER BY sexo ;					--agrupado e ordenado  por sexo
 
 /*QUESTÃO 03: prepare um relatório que liste o nome dos departamentos e, para
 cada departamento, inclua as seguintes informações de seus funcionários: o nome
@@ -20,8 +20,8 @@ completo, a data de nascimento, a idade em anos completos e o salário.*/
 
 SELECT
 	f.primeiro_nome ||' '|| f.nome_meio||' '||f.ultimo_nome as nome_completo, 		--selecionado os nomes de todos os funcionários e agrupamos por nome_completo 
-	f.data_nascimento, 																--selecionado a data de nascimento 
-	DATE_PART('year', current_date)- DATE_PART('year', f.data_nascimento) as idade, --idade do funcionário através da data atual menos a data_nascimento
+	f.data_nascimento, 									--selecionado a data de nascimento 
+	DATE_PART('year', AGE(f.data_nascimento))  as idade, 					--idade do funcionário através da função AGE
 	f.salario,
 	d.nome_departamento 
 FROM 	funcionario f 
@@ -35,10 +35,10 @@ reajuste deve ser de 20%, e se o salário atual do funcionário for igual ou sup
 35.000 o reajuste deve ser de 15%.*/
 
 SELECT
-	f.primeiro_nome ||' '|| f.nome_meio||' '||f.ultimo_nome as nome_completo, 			--selecionado os nomes de todos os funcionários e agrupamos por nome_completo 
+	f.primeiro_nome ||' '|| f.nome_meio||' '||f.ultimo_nome as nome_completo, 	--selecionado os nomes de todos os funcionários e agrupamos por nome_completo 
 	f.data_nascimento, 
-	DATE_PART('year', AGE(f.data_nascimento)) as idade, 	--idade do funcionário através da data atual menos a data_nascimento
-	f.salario AS salario_atual,															-- o salario é  renomeado como salario_atual 
+	DATE_PART('year', AGE(f.data_nascimento)) as idade, 				--idade do funcionário através da função AGE
+	f.salario AS salario_atual,							-- o salario é  renomeado como salario_atual 
 	(case when(f.salario < '35000') then f.salario * 1.20
 			when (f.salario >= '35000')then f.salario * 1.15 end) as salario_reajuste	/*usamos o case para uma condição de reajuste dependendo do salário
 																					      do funcionário */				
