@@ -63,12 +63,12 @@ ORDER BY D.nome_departamento ASC, F.salario DESC;
 têm dependentes, o departamento onde eles trabalham e, para cada funcionário, também liste o nome completo dos dependentes, a idade em anos de cada
 dependente e o sexo (o sexo NÃO DEVE aparecer como M ou F, deve aparecer
 como “Masculino” ou “Feminino”).*/
-SELECT F.numero_departamento,
-(F.primeiro_nome ||' '|| F.nome_meio ||' '|| F.ultimo_nome) AS nome_funcionario,
-D.nome_dependente, 
+SELECT f.numero_departamento,
+(f.primeiro_nome ||' '|| f.nome_meio ||' '|| f.ultimo_nome) AS nome_funcionario,
+d.nome_dependente, 
 	DATE_PART('year', AGE(D.data_nascimento)) AS idade_dependente, (CASE WHEN (D.sexo='M') THEN 'Masculino' WHEN (D.sexo='F') THEN 'Feminino'END) AS sexo
-	FROM funcionario AS F, dependente AS D
-	WHERE F.cpf = D.cpf_funcionario;
+	FROM funcionario AS f, dependente AS d
+	WHERE f.cpf = d.cpf_funcionario;
 	
 /*QUESTÃO 07: prepare um relatório que mostre, para cada funcionário que NÃO
 TEM dependente, seu nome completo, departamento e salário.*/
@@ -76,50 +76,50 @@ TEM dependente, seu nome completo, departamento e salário.*/
 SELECT (F.primeiro_nome||' '|| F.nome_meio||' '|| F.ultimo_nome) AS nome_funcionario,
 F.numero_departamento,
 F.salario
-FROM 	funcionario AS F
-	WHERE F.cpf NOT IN (SELECT D.cpf_funcionario FROM dependente AS D);
+FROM 	funcionario AS f
+	WHERE f.cpf NOT IN (SELECT d.cpf_funcionario FROM dependente AS d);
 
 /*QUESTÃO 08: prepare um relatório que mostre, para cada departamento, os projetos desse departamento e o nome completo dos funcionários que estão alocados
 em cada projeto. Além disso inclua o número de horas trabalhadas por cada funcionário, em cada projeto.
 4*/
 
-SELECT D.nome_departamento, P.nome_projeto, (F.primeiro_nome||' '|| F.nome_meio||' '|| F.ultimo_nome) AS nome_funcionario,
-CAST (CASE WHEN T.horas is null then 0 else T.horas end as DECIMAL(3, 1)) as horas
+SELECT d.nome_departamento, p.nome_projeto, (f.primeiro_nome||' '|| f.nome_meio||' '|| f.ultimo_nome) AS nome_funcionario,
+CAST (CASE WHEN t.horas is null then 0 else t.horas end as DECIMAL(3, 1)) as horas
 
-FROM funcionario AS F
+FROM funcionario AS f
 		
-	INNER JOIN trabalha_em AS T
-	ON F.cpf = T.cpf_funcionario
-	INNER JOIN projeto AS P
-	ON T.numero_projeto = P.numero_projeto
-	INNER JOIN departamento AS D
-	ON F.numero_departamento = D.numero_departamento
-	ORDER BY D.nome_departamento, P.nome_projeto, F.salario DESC;
+	INNER JOIN trabalha_em AS t
+	ON f.cpf = t.cpf_funcionario
+	INNER JOIN projeto AS p
+	ON t.numero_projeto = p.numero_projeto
+	INNER JOIN departamento AS d
+	ON f.numero_departamento = d.numero_departamento
+	ORDER BY d.nome_departamento, p.nome_projeto, f.salario DESC;
 
 /*QUESTÃO 09: prepare um relatório que mostre a soma total das horas de cada
 projeto em cada departamento. Obs.: o relatório deve exibir o nome do departamento, o nome do projeto e a soma total das horas.*/
 
-SELECT D.nome_departamento, P.nome_projeto,
+SELECT p.nome_departamento, p.nome_projeto,
 CAST (CASE WHEN SUM(T.horas) is null then 0 else SUM(T.horas) end as DECIMAL(3, 1)) AS total_horas
 
-FROM 	funcionario AS F
+FROM 	funcionario AS f
 		
-	INNER JOIN trabalha_em AS T
-	ON F.cpf = T.cpf_funcionario
-	INNER JOIN projeto AS P
-	ON T.numero_projeto = P.numero_projeto
-	INNER JOIN departamento AS D
-	ON F.numero_departamento = D.numero_departamento
-	GROUP BY D.nome_departamento, P.nome_projeto;
+	INNER JOIN trabalha_em AS t
+	ON f.cpf = t.cpf_funcionario
+	INNER JOIN projeto AS p
+	ON t.numero_projeto = p.numero_projeto
+	INNER JOIN departamento AS d
+	ON f.numero_departamento = d.numero_departamento
+	GROUP BY d.nome_departamento, p.nome_projeto;
 
 /*QUESTÃO 10: prepare um relatório que mostre a média salarial dos funcionários
 de cada departamento.*/
 
 SELECT D.nome_departamento,
 CAST (AVG(salario) AS DECIMAL(10,2)) AS media_salarial
-FROM 	funcionario AS F
-	INNER JOIN departamento AS D
-	ON F.numero_departamento = D.numero_departamento
-	GROUP BY D.nome_departamento;
+FROM 	funcionario AS f
+	INNER JOIN departamento AS d
+	ON f.numero_departamento = d.numero_departamento
+	GROUP BY d.nome_departamento;
 
 --falta comentar
